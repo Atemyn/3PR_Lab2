@@ -59,3 +59,9 @@ void buildingInput(Building* b)
 		printf("Отлично! Здание получилось устойчивым с коэффициентом устойчивости k = %lf\n", b->stabilityFactor);
 	}
 }
+
+void buildingDisplay(Building* b)
+{
+	printf("\nДлина стороны: %f\nВысота фундамента: %f\nВысота этажа: %f\nКоличество этажей: %u\nКоэффициент устойчивости: %lf\n",
+		b->sideLength, b->basementHeight, b->floorHeight, b->floorAmount, b->stabilityFactor);
+}

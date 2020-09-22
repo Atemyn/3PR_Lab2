@@ -18,3 +18,5 @@ typedef struct {
 void buildingInit(Building* b);
 
 void buildingInput(Building* b);
+
+void buildingDisplay(Building* b);

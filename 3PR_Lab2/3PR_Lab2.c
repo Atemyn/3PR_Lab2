@@ -12,6 +12,7 @@ int main()
 
 	buildingInit(domik);
 	buildingInput(zdanie);
+	buildingDisplay(zdanie);
 
 	return 0;
 }
