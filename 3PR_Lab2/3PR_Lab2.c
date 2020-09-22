@@ -17,4 +17,6 @@ void main()
 	buildingDisplay(zdanie);
 
 	newB = buildingsAdd(zdanie, domik);
+
+	addFloors(&newB);
 }

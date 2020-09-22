@@ -24,3 +24,5 @@ void buildingDisplay(Building* b);
 
 Building buildingsAdd(Building* b1, Building* b2);
 
+void addFloors(Building* b);
+

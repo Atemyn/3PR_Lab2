@@ -50,25 +50,25 @@ void buildingInput(Building* b)
 		}
 		else
 		{
-			puts("Здание не смогло устоять и рухнуло!\n");
+			puts("Здание не смогло устоять и рухнуло!\n\n");
 			buildingInit(b);
 		}
 	}
 	else
 	{
-		printf("Отлично! Здание получилось устойчивым с коэффициентом устойчивости k = %lf\n", b->stabilityFactor);
+		printf("Отлично! Здание получилось устойчивым с коэффициентом устойчивости k = %lf\n\n", b->stabilityFactor);
 	}
 }
 
 void buildingDisplay(Building* b)
 {
-	printf("\nДлина стороны: %f\nВысота фундамента: %f\nВысота этажа: %f\nКоличество этажей: %u\nКоэффициент устойчивости: %lf\n",
+	printf("Длина стороны: %f\nВысота фундамента: %f\nВысота этажа: %f\nКоличество этажей: %u\nКоэффициент устойчивости: %lf\n\n",
 		b->sideLength, b->basementHeight, b->floorHeight, b->floorAmount, b->stabilityFactor);
 }
 
 Building buildingsAdd(Building* b1, Building* b2)
 {
-	puts("\nСовмещаем два здания... Их свойства такие:");
+	puts("Совмещаем два здания... Их свойства такие:");
 	printf("Длины сторон оснований: %.3f и %.3f\nВысоты фундаментов : %.3f и %.3f\nВысотs этажей : %.3f и %.3f\nКоличества этажей : %u и %u\nКоэффициенты устойчивости : %.3lf и %.3lf\n\n",
 		b1->sideLength, b2->sideLength, b1->basementHeight, b2->basementHeight, b1->floorHeight, b2->floorHeight, b1->floorAmount, b2->floorAmount, b1->stabilityFactor, b2->stabilityFactor);
 	Building resultBuilding;
@@ -97,9 +97,38 @@ Building buildingsAdd(Building* b1, Building* b2)
 	}
 	else
 	{
-		printf("Отлично! Новое здание устояло. Его свойства такие:\n");
+		printf("Отлично! Новое здание устояло. Его свойства такие:\n\n");
 		buildingDisplay(&resultBuilding);
 	}
 
 	return resultBuilding;
+}
+
+void addFloors(Building* b)
+{
+	unsigned floorsToAdd;
+	printf("Введите количество этажей для добавления к вашему зданию: ");
+	while (!scanf("%u", &floorsToAdd) || floorsToAdd < 0)
+	{
+		printf("Неверный ввод количества - оно должно быть неотрицательным целым числом. Попробуйте еще раз: ");
+		rewind(stdin);
+	}
+
+	b->floorAmount = b->floorAmount + floorsToAdd;
+
+	b->stabilityFactor = (float)(b->sideLength * b->sideLength * sqrt(b->basementHeight)) / (b->floorHeight * b->floorAmount);
+
+	if (b->stabilityFactor < 1.0)
+	{
+		printf("Коэффициент стабильности вашего здания k = %lf стал меньше единицы. Оно может рухнуть с минуты на минуту. Попробуйте изменить количество этажей к добавлению (например, на 0)\n\n", b->stabilityFactor);
+		b->floorAmount = b->floorAmount - floorsToAdd;
+		addFloors(b);
+	}
+	else
+	{
+		printf("Отлично! Здание получилось устойчивым с коэффициентом устойчивости k = %lf\n\n", b->stabilityFactor);
+	}
+
+	puts("Свойства здания с доп. этажами: \n");
+	buildingDisplay(b);
 }
