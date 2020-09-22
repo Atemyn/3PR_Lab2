@@ -19,4 +19,6 @@ void main()
 	newB = buildingsAdd(zdanie, domik);
 
 	addFloors(&newB);
+
+	removeFloors(&newB);
 }

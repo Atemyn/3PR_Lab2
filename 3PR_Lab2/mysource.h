@@ -26,3 +26,5 @@ Building buildingsAdd(Building* b1, Building* b2);
 
 void addFloors(Building* b);
 
+void removeFloors(Building* b);
+

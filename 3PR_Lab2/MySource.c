@@ -132,3 +132,19 @@ void addFloors(Building* b)
 	puts("Свойства здания с доп. этажами: \n");
 	buildingDisplay(b);
 }
+
+void removeFloors(Building* b)
+{
+	unsigned floorsToRemove;
+	printf("Введите количество этажей для удаления с вашего здания: ");
+	while (!scanf("%u", &floorsToRemove) || floorsToRemove < 0 || floorsToRemove >= b->floorAmount)
+	{
+		printf("Неверный ввод количества - оно должно быть неотрицательным целым числом и меньшим общего числа этажей. Попробуйте еще раз: ");
+		rewind(stdin);
+	}
+
+	b->floorAmount = b->floorAmount - floorsToRemove;
+
+	puts("Свойства урезанного здания: \n");
+	buildingDisplay(b);
+}
