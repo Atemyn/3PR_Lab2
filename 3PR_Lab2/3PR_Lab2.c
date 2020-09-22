@@ -11,6 +11,7 @@ int main()
 	domik = (Building*)malloc(sizeof(Building));
 
 	buildingInit(domik);
+	buildingInput(zdanie);
 
 	return 0;
 }
