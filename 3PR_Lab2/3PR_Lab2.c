@@ -9,4 +9,6 @@ int main()
 
 	zdanie = (Building*)malloc(sizeof(Building));
 	domik = (Building*)malloc(sizeof(Building));
+
+	return 0;
 }
