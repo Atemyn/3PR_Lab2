@@ -15,3 +15,4 @@ typedef struct {
 	float stabilityFactor;
 }Building;
 
+void buildingInit(Building* b);
