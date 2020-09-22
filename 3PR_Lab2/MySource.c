@@ -65,3 +65,41 @@ void buildingDisplay(Building* b)
 	printf("\nДлина стороны: %f\nВысота фундамента: %f\nВысота этажа: %f\nКоличество этажей: %u\nКоэффициент устойчивости: %lf\n",
 		b->sideLength, b->basementHeight, b->floorHeight, b->floorAmount, b->stabilityFactor);
 }
+
+Building buildingsAdd(Building* b1, Building* b2)
+{
+	puts("\nСовмещаем два здания... Их свойства такие:");
+	printf("Длины сторон оснований: %.3f и %.3f\nВысоты фундаментов : %.3f и %.3f\nВысотs этажей : %.3f и %.3f\nКоличества этажей : %u и %u\nКоэффициенты устойчивости : %.3lf и %.3lf\n\n",
+		b1->sideLength, b2->sideLength, b1->basementHeight, b2->basementHeight, b1->floorHeight, b2->floorHeight, b1->floorAmount, b2->floorAmount, b1->stabilityFactor, b2->stabilityFactor);
+	Building resultBuilding;
+	if (b1->sideLength > b2->sideLength)
+		resultBuilding.sideLength = b1->sideLength;
+	else
+		resultBuilding.sideLength = b2->sideLength;
+
+	if (b1->basementHeight > b2->basementHeight)
+		resultBuilding.basementHeight = b1->basementHeight;
+	else
+		resultBuilding.basementHeight = b2->basementHeight;
+
+	if (b1->floorHeight > b2->floorHeight)
+		resultBuilding.floorHeight = b1->floorHeight;
+	else
+		resultBuilding.floorHeight = b2->floorHeight;
+
+	resultBuilding.floorAmount = b1->floorAmount + b2->floorAmount;
+
+	resultBuilding.stabilityFactor = (float)(resultBuilding.sideLength * resultBuilding.sideLength * sqrt(resultBuilding.basementHeight)) / (resultBuilding.floorHeight * resultBuilding.floorAmount);
+	if (resultBuilding.stabilityFactor < 1)
+	{
+		printf("К сожалению, после совмещения двух зданий новое здание сразу же развалилось, так как его коэффициент устойчивости k = %lf меньше нуля\n\n", resultBuilding.stabilityFactor);
+		buildingInit(&resultBuilding);
+	}
+	else
+	{
+		printf("Отлично! Новое здание устояло. Его свойства такие:\n");
+		buildingDisplay(&resultBuilding);
+	}
+
+	return resultBuilding;
+}

@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
-#include <windows.h>
 #include <math.h>
+#include <windows.h>
+#define MYSOURCE
 
 typedef struct {
 	float sideLength;
@@ -20,3 +21,6 @@ void buildingInit(Building* b);
 void buildingInput(Building* b);
 
 void buildingDisplay(Building* b);
+
+Building buildingsAdd(Building* b1, Building* b2);
+

@@ -1,11 +1,13 @@
 #include "mysource.h"
 
-int main()
+void main()
 {
+	// Подключение русского консольного ввода.
 	SetConsoleCP(1251);
+	// Подключение русского консольного вывода.
 	SetConsoleOutputCP(1251);
 
-	Building* zdanie, * domik;
+	Building* zdanie, * domik, newB;
 
 	zdanie = (Building*)malloc(sizeof(Building));
 	domik = (Building*)malloc(sizeof(Building));
@@ -14,5 +16,5 @@ int main()
 	buildingInput(zdanie);
 	buildingDisplay(zdanie);
 
-	return 0;
+	newB = buildingsAdd(zdanie, domik);
 }
