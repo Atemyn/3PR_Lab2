@@ -7,12 +7,17 @@
 #include <math.h>
 #include <windows.h>
 #define MYSOURCE
-
+// Структура здания.
 typedef struct {
+	// Длина стороны основания.
 	float sideLength;
+	// Высота фундамента.
 	float basementHeight;
+	// Высота этажа.
 	float floorHeight;
+	// Количество этажей.
 	unsigned floorAmount;
+	// Коэффициент устойчивости.
 	float stabilityFactor;
 }Building;
 

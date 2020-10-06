@@ -1,5 +1,6 @@
 #include "mysource.h"
 
+// Функция, устананавлиающая все значения структуры по умолчанию в 1.
 void buildingInit(Building* b)
 {
 	b->sideLength = 1.0;
@@ -8,8 +9,11 @@ void buildingInit(Building* b)
 	b->floorAmount = 1;
 	b->stabilityFactor = 1.0;
 }
+// Функция по вводу данных о здании и по расчету коэффициента устойчивости на основе этих данных.
+// b - указатель на экземпляр структуры Building.
 void buildingInput(Building* b)
 {
+	// Защиты от дурака для ввода всех необходимых данных.
 	printf("Введите длину стороны вашего здания: ");
 	while (!scanf("%f", &b->sideLength) || b->sideLength <= 0)
 	{
@@ -37,9 +41,9 @@ void buildingInput(Building* b)
 		printf("Неверный ввод количества - оно должно быть положительным целым числом. Попробуйте еще раз: ");
 		rewind(stdin);
 	}
-
+	// Расчет коэффицента устойчивости.
 	b->stabilityFactor = (float)(b->sideLength * b->sideLength * sqrt(b->basementHeight)) / (b->floorHeight * b->floorAmount);
-
+	// Если коэффициент устойчивости меньше 1 - здание упадет; необхлдим повторный ввод характеристик
 	if (b->stabilityFactor < 1.0)
 	{
 		printf("Коэффициент стабильности вашего здания k = %lf меньше единицы. Оно может рухнуть с минуты на минуту. Хотите ли перестроить его?\n", b->stabilityFactor);
@@ -59,13 +63,14 @@ void buildingInput(Building* b)
 		printf("Отлично! Здание получилось устойчивым с коэффициентом устойчивости k = %lf\n\n", b->stabilityFactor);
 	}
 }
-
+// Функция по выводу всех данных о здании построчно.
 void buildingDisplay(Building* b)
 {
 	printf("Длина стороны: %f\nВысота фундамента: %f\nВысота этажа: %f\nКоличество этажей: %u\nКоэффициент устойчивости: %lf\n\n",
 		b->sideLength, b->basementHeight, b->floorHeight, b->floorAmount, b->stabilityFactor);
 }
-
+// Функция по сложению двух зданий и расчету нового коэффициента устойчивости.
+// b1, b2 - указатели на два экземпляра структуры Building.
 Building buildingsAdd(Building* b1, Building* b2)
 {
 	puts("Совмещаем два здания... Их свойства такие:");
@@ -88,7 +93,7 @@ Building buildingsAdd(Building* b1, Building* b2)
 		resultBuilding.floorHeight = b2->floorHeight;
 
 	resultBuilding.floorAmount = b1->floorAmount + b2->floorAmount;
-
+	// Расчет нового коэффициента устойчивости и проверка его корректности.
 	resultBuilding.stabilityFactor = (float)(resultBuilding.sideLength * resultBuilding.sideLength * sqrt(resultBuilding.basementHeight)) / (resultBuilding.floorHeight * resultBuilding.floorAmount);
 	if (resultBuilding.stabilityFactor < 1)
 	{
@@ -103,10 +108,11 @@ Building buildingsAdd(Building* b1, Building* b2)
 
 	return resultBuilding;
 }
-
+// Функция по добавлению floorsToAdd этажей к экземпляру структуры Building, на который указывает b.
 void addFloors(Building* b)
 {
 	unsigned floorsToAdd;
+	// Защита от дурака для ввода floorsToAdd.
 	printf("Введите количество этажей для добавления к вашему зданию: ");
 	while (!scanf("%u", &floorsToAdd) || floorsToAdd < 0)
 	{
@@ -115,9 +121,8 @@ void addFloors(Building* b)
 	}
 
 	b->floorAmount = b->floorAmount + floorsToAdd;
-
+	// Расчет нового коэффициента устойчивости и проверка его корректности.
 	b->stabilityFactor = (float)(b->sideLength * b->sideLength * sqrt(b->basementHeight)) / (b->floorHeight * b->floorAmount);
-
 	if (b->stabilityFactor < 1.0)
 	{
 		printf("Коэффициент стабильности вашего здания k = %lf стал меньше единицы. Оно может рухнуть с минуты на минуту. Попробуйте изменить количество этажей к добавлению (например, на 0)\n\n", b->stabilityFactor);
@@ -128,23 +133,24 @@ void addFloors(Building* b)
 	{
 		printf("Отлично! Здание получилось устойчивым с коэффициентом устойчивости k = %lf\n\n", b->stabilityFactor);
 	}
-
+	// Отображение информации о здании.
 	puts("Свойства здания с доп. этажами: \n");
 	buildingDisplay(b);
 }
-
+// Функция по удалению floorsToRemove этажей у экземпляра структуры Building, на кторый указывает b.
 void removeFloors(Building* b)
 {
 	unsigned floorsToRemove;
+	// Защита от дурака для ввода floorsToRemove.
 	printf("Введите количество этажей для удаления с вашего здания: ");
 	while (!scanf("%u", &floorsToRemove) || floorsToRemove < 0 || floorsToRemove >= b->floorAmount)
 	{
 		printf("Неверный ввод количества - оно должно быть неотрицательным целым числом и меньшим общего числа этажей. Попробуйте еще раз: ");
 		rewind(stdin);
 	}
-
+	// Расчет нового коэффициента устойчивости.
 	b->floorAmount = b->floorAmount - floorsToRemove;
-
+	// Отображение информации о здании.
 	puts("Свойства урезанного здания: \n");
 	buildingDisplay(b);
 }
